@@ -1,3 +1,3 @@
 # Experimental Psychology
 
-## Folder containing the data accumulated by the experiments.
+## Folder containing the raw and preprocessed data accumulated by the experiments.
