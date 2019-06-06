@@ -6,8 +6,8 @@
 
 Additional material relevant to perform the analysis of the data.
 Contains:
-- [link](https://chicagofaces.org/default/download/ "norming data & codebook") from the Chicago Face Database
-- [link](https://chicagofaces.org/default/download/ "measurement guide") from the Chicago Face Database
+- [norming data & codebook](https://chicagofaces.org/default/download/) from the Chicago Face Database
+- [measurement guide](https://chicagofaces.org/default/download/) from the Chicago Face Database
 
 ### study 1
 Analysis of data from study 1.
