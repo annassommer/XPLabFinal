@@ -1,0 +1,38 @@
+---
+title: "01 data_preprocessing"
+author: "Fabienne Kock"
+date: "9 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+```
+## 1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\raw\\S4b.csv")
+data
+```
+
+## 2 correct header
+```{r}
+names(data) <- paste(names(data), data[1, ], sep = "_")
+data <- data[-1,]
+```
+
+
+```{r}
+glimpse(data)
+```
+## split into upright and inverted and 
+```{r}
+upright <- select(data, ResponseID_ResponseID ,ends_with("_upright"))
+glimpse(upright)
+
+```

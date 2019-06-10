@@ -1,8 +1,8 @@
 # Experimental Psychology
 
-## Folder containing additional material
+## This is a folder containing additional material
 
-### analysis
+### Folder analysis:
 
 Additional material pertaining the analysis of the data.
 Contains:

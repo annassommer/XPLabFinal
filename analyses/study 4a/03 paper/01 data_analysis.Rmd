@@ -1,0 +1,60 @@
+---
+title: "01_data preprocessing"
+author: "Fabienne Kock"
+date: "8 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+if necessary:
+```{r}
+install.packages("effsize")
+```
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+```
+1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\raw\\S4a.csv")
+data
+```
+
+2 filter out necessary data
+```{r}
+trust <- data$trustworthy
+dom <- data$dominant
+```
+3. visualize with boxplots
+```{r}
+ boxplot(trust,dom,ylab="rating of being uniquely human",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5) 
+```
+
+4. median and standard deviation
+```{r}
+m_trust <-median(trust)
+sd_trust <- sd(trust)
+print('Trustworthy', quote = FALSE)
+print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
+
+m_dom <- median(dom)
+sd_dom <- sd(dom)
+print("Dominance",  quote = FALSE)
+print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
+
+
+```
+
+5. paired sample t-test
+```{r}
+t.test(trust,dom,paired=TRUE)
+
+```
+
+6.cohens d
+```{r}
+cohen.d(trust, dom, paired = TRUE)
+```
