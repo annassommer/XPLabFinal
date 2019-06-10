@@ -1,0 +1,52 @@
+---
+title: "02 data_analysis"
+author: "Fabienne Kock"
+date: "10 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+library(readr)
+library(tidyr)
+```
+## 1. read in the data
+```{r}
+exp_data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S4b_exp_data.csv")
+subj_data <- read_csv( "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S4b_subject_data.csv")
+exp_data
+```
+
+## 2 Pearson correlation between each participants rating of the upright and the inverted faces
+### 2.0 split data in inverted and transposed
+```{r}
+upright <- select(exp_data, ID, ends_with("upright"))
+inverted <- select(exp_data, ID, ends_with("inverted"))
+```
+### 2.1 transpose data
+```{r}
+upright_t <- t(upright)
+inverted_t <- t(inverted)
+```
+```{r}
+colnames(upright_t) <- upright_t[1,]
+upright_t<- upright_t[-1,]
+colnames(inverted_t) <- inverted_t[1,]
+inverted_t<- inverted_t[-1,]
+
+```
+```{r}
+head(upright_t)
+head(inverted_t)
+```
+### 2.2 test if normal distributed for every subject
+```{r}
+
+```
