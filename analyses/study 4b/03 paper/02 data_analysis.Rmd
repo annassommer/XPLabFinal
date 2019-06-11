@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+install
+```{r}
+install.packages("DescTools")
+```
 
 packages
 ```{r}
@@ -16,6 +20,7 @@ library(effsize)
 library(dplyr)
 library(readr)
 library(tidyr)
+library(DescTools)
 ```
 ## 1. read in the data
 ```{r}
@@ -59,17 +64,67 @@ while(col <= ncol(upright_t)){
 }
 exp_data$pearson <- pearson
 ```
-```{r} how it should look like if one does not coerce it into a string
+how it should look like if one does not coerce it into a string
+```{r} 
 name <- colnames(df.upright_t)[1]
 inv <- as.double(df.inverted_t[,name])
 up <- as.double(df.upright_t[,name])
-p_val <- cor.test(up,inv,method = "pearson")
-p_val
+cor.test(up,inv,method = "pearson")
+
 ```
 
-
+How it looks like in the dataframe
 ```{r}
-head(exp_data$pearson)
+exp_data
+exp_data$pearson[1]
 
 ```
+### 2.3 filter out pearsons rho
+Function to split rho fromm the information gained by applying Pearson
+```{r}
+getRoh <- function(row){
+  rho <- strsplit(row, ",")
+  rho <- rho[[1]]
+  rho <- strsplit(rho[4],"=")
+  rho <- rho[[1]]
+  rho <- strsplit(rho[2],"\\)")
+  rho <- rho[[1]]
+return(rho)
+}
+
+```
+Getting rho for every row, adding it as row to the exp_data and converting it back to a numeric
+```{r}
+rho_list <- c()
+row <- 1
+while(row <= nrow(exp_data)){
+  rho <- getRoh(exp_data$pearson[row])
+  rho_list <- c(rho_list, rho)
+  row <- row+1
+}
+exp_data$rho <- rho_list
+exp_data <- mutate(exp_data, rho = as.numeric(rho))
+```
+
+Calculate Fisher z
+```{r}
+fz_list <- c()
+row <- 1
+while(row <= nrow(exp_data)){
+  fz <- FisherZ(exp_data$rho[row])
+  fz_list <- c(fz_list, fz)
+  row <- row+1
+}
+exp_data$fisher_z <- fz_list
+
+```
+
+### 2.4 extract frame with ID pearson, rho and Fisher z
+```{r}
+analysed_data <- select(exp_data, ID, pearson, rho,fisher_z)
+analysed_data
+```
+
+
 ## 3. one way ANova 
+### 3.1 
