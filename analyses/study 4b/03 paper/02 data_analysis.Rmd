@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 install
 ```{r}
 install.packages("DescTools")
+install.packages("Rmisc")
 ```
 
 packages
@@ -21,6 +22,7 @@ library(dplyr)
 library(readr)
 library(tidyr)
 library(DescTools)
+library(Rmisc)
 ```
 ## 1. read in the data
 ```{r}
@@ -42,11 +44,10 @@ inverted_t <- t(inverted)
 ```
 
 ```{r}
-colnames(df.upright_t) <- df.upright_t[1,]
-df.upright_t <- df.upright_t[-1,]
-colnames(df.inverted_t) <- df.inverted_t[1,]
-df.inverted_t <- df.inverted_t[-1,]
-
+colnames(upright_t) <- upright_t[1,]
+upright_t<-upright_t[-1,]
+colnames(inverted_t) <- inverted_t[1,]
+inverted_t<-inverted_t[-1,]
 ```
 
 
@@ -55,20 +56,20 @@ df.inverted_t <- df.inverted_t[-1,]
 pearson <- c()
 col <- 1
 while(col <= ncol(upright_t)){
-  name <- colnames(df.upright_t)[col]
-  inv <- as.double(df.inverted_t[,name])
-  up <- as.double(df.upright_t[,name])
+  inv <- as.double(inverted_t[,col])
+  up <- as.double(upright_t[,col])
   p_val <- cor.test(up,inv,method = "pearson")
   pearson <- c(pearson, toString(p_val)) 
   col <- col+ 1
 }
 exp_data$pearson <- pearson
 ```
+
+
 how it should look like if one does not coerce it into a string
 ```{r} 
-name <- colnames(df.upright_t)[1]
-inv <- as.double(df.inverted_t[,name])
-up <- as.double(df.upright_t[,name])
+inv <- as.double(inverted_t[,7])
+up <- as.double(upright_t[,7])
 cor.test(up,inv,method = "pearson")
 
 ```
@@ -76,53 +77,63 @@ cor.test(up,inv,method = "pearson")
 How it looks like in the dataframe
 ```{r}
 exp_data
-exp_data$pearson[1]
+exp_data$pearson[7]
 
 ```
-### 2.3 filter out pearsons rho
-Function to split rho fromm the information gained by applying Pearson
+### 2.3 filter out correlation
+Function to split the correlation from the information gained by applying Pearson
 ```{r}
-getRoh <- function(row){
-  rho <- strsplit(row, ",")
-  rho <- rho[[1]]
-  rho <- strsplit(rho[4],"=")
-  rho <- rho[[1]]
-  rho <- strsplit(rho[2],"\\)")
-  rho <- rho[[1]]
-return(rho)
+getCorr <- function(row){
+  corr <- strsplit(row, ",")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[4],"=")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[2],"\\)")
+  corr <- corr[[1]]
+return(corr)
 }
-
 ```
-Getting rho for every row, adding it as row to the exp_data and converting it back to a numeric
+Getting the Correlation for every row, adding it as row to the exp_data and converting it back to a numeric
 ```{r}
-rho_list <- c()
+corr_list <- c()
 row <- 1
 while(row <= nrow(exp_data)){
-  rho <- getRoh(exp_data$pearson[row])
-  rho_list <- c(rho_list, rho)
+  corr <- getCorr(exp_data$pearson[row])
+  corr_list <- c(corr_list, corr)
   row <- row+1
 }
-exp_data$rho <- rho_list
-exp_data <- mutate(exp_data, rho = as.numeric(rho))
 ```
 
-Calculate Fisher z
 ```{r}
-fz_list <- c()
-row <- 1
-while(row <= nrow(exp_data)){
-  fz <- FisherZ(exp_data$rho[row])
-  fz_list <- c(fz_list, fz)
-  row <- row+1
-}
-exp_data$fisher_z <- fz_list
-
+exp_data$Sesnsitivity_correlation <- corr_list
+exp_data <- mutate(exp_data, Sesnsitivity_correlation = as.numeric(corr_list))
 ```
 
-### 2.4 extract frame with ID pearson, rho and Fisher z
+
+### 2.4 extract frame with ID pearson, and Sensitivity correlation
 ```{r}
-analysed_data <- select(exp_data, ID, pearson, rho,fisher_z)
+analysed_data <- select(exp_data, ID, pearson, Sesnsitivity_correlation)
 analysed_data
+```
+### 2.5 mean
+```{r}
+mean<-mean(analysed_data$Sesnsitivity_correlation, na.rm = TRUE)
+mean
+```
+### 2.6 standardeviation
+```{r}
+sd <- sd(analysed_data$Sesnsitivity_correlation, na.rm = TRUE)
+sd
+
+```
+### 2.7 VArianz
+```{r}
+var<-var(analysed_data$Sesnsitivity_correlation, na.rm = TRUE)
+var
+```
+### 2.8 Confidenceintervall
+```{r}
+c(mean-1.96*sd, mean+1.96*sd)
 ```
 
 
