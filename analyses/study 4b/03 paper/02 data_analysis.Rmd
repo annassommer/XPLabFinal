@@ -35,18 +35,41 @@ inverted <- select(exp_data, ID, ends_with("inverted"))
 upright_t <- t(upright)
 inverted_t <- t(inverted)
 ```
+
 ```{r}
-colnames(upright_t) <- upright_t[1,]
-upright_t<- upright_t[-1,]
-colnames(inverted_t) <- inverted_t[1,]
-inverted_t<- inverted_t[-1,]
+colnames(df.upright_t) <- df.upright_t[1,]
+df.upright_t <- df.upright_t[-1,]
+colnames(df.inverted_t) <- df.inverted_t[1,]
+df.inverted_t <- df.inverted_t[-1,]
 
 ```
+
+
+### 2.2 calculate Pearson correlation
 ```{r}
-head(upright_t)
-head(inverted_t)
+pearson <- c()
+col <- 1
+while(col <= ncol(upright_t)){
+  name <- colnames(df.upright_t)[col]
+  inv <- as.double(df.inverted_t[,name])
+  up <- as.double(df.upright_t[,name])
+  p_val <- cor.test(up,inv,method = "pearson")
+  pearson <- c(pearson, toString(p_val)) 
+  col <- col+ 1
+}
+exp_data$pearson <- pearson
 ```
-### 2.2 test if normal distributed for every subject
+```{r} how it should look like if one does not coerce it into a string
+name <- colnames(df.upright_t)[1]
+inv <- as.double(df.inverted_t[,name])
+up <- as.double(df.upright_t[,name])
+p_val <- cor.test(up,inv,method = "pearson")
+p_val
+```
+
+
 ```{r}
+head(exp_data$pearson)
 
 ```
+## 3. one way ANova 
