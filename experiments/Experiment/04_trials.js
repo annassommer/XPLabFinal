@@ -42,7 +42,7 @@ const trial_info = {
         optionLeft: "Applies Equally to Humans and Non-Humans",
         optionRight: "Applies Uniquely to Humans",
         QUD: "How would you rate the following trait?",
-        question: "Neuroticism",
+        question: "Patience",
 
       },
       {
@@ -82,7 +82,7 @@ const trial_info = {
 var images_upright = [];
 var images_inverted = [];
 
-for(i = 1; i <= 36; i++) {
+for(i = 1; i <= 1; i++) {
   images_inverted.push({
       optionLeft: "Not at all humanlike",
       optionRight: "Very humanlike",

@@ -43,11 +43,11 @@ const instructions = babeViews.view_generator("instructions",{
     text:  `In this part of the experiment you will be shown a personality trait.
             <br />
             It is your task to rate this personality trait on how equal they apply
-            to humans oand non-humans. 1 stands here for 'Applies Equally to Humans
+            to humans and non-humans. 1 stands here for 'Applies Equally to Humans
             and Non-Humans' and 9 stands for 'Applies Uniquely to Humans'.
             <br />
             <br />
-            If you are ready to start please press the start button`,
+            If you are ready to start please press the start button:`,
     buttonText: 'start the first task.'
 });
 
@@ -62,7 +62,7 @@ const instructions_main = babeViews.view_generator("instructions",{
             1 stands here for 'Not at all humanlike' and 7 stands for 'Very humanlike'.
             <br />
             <br />
-            If you are ready to start please press the start button`,
+            If you are ready to start please press the start button:`,
     buttonText: 'start the second task.'
 });
 
@@ -72,7 +72,7 @@ const post_test = babeViews.view_generator("post_test",{
     trials: 1,
     name: 'post_test',
     title: 'Additional information',
-    text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
+    text: 'Answering the following questions is optional, but your answers will help us analyze our results.',
 
     // You can change much of what appears here, e.g., to present it in a different language, as follows:
     // buttonText: 'Weiter',
