@@ -82,7 +82,7 @@ const trial_info = {
 var images_upright = [];
 var images_inverted = [];
 
-for(i = 1; i <= 1; i++) {
+for(i = 1; i <= 36; i++) {
   images_inverted.push({
       optionLeft: "Not at all humanlike",
       optionRight: "Very humanlike",
