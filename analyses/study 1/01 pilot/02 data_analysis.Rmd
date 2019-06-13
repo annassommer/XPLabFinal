@@ -1,0 +1,191 @@
+---
+title: "02 data_analysis"
+author: "Fabienne Kock"
+date: "13 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(DescTools)
+library(Rmisc)
+```
+Function to split the correlation from the information gained by applying Pearson
+```{r}
+getCorr <- function(row){
+  corr <- strsplit(row, ",")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[4],"=")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[2],"\\)")
+  corr <- corr[[1]]
+return(corr)
+}
+```
+
+## 1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\S1_data_clean.csv")
+data
+```
+## 1.1 create a df for the results
+```{r}
+trust <- filter(data, category == "Vertrauenswürdigkeit")
+dom <- filter(data, category == "Dominanz")
+```
+
+
+## 2. Sensitivity correlation: Trust
+
+### 2.0 split data in inverted and upright
+```{r}
+upright_trust <- filter(trust, pictureFormat == "Upright")
+inverted_trust <- filter(trust, pictureFormat == "Inverted")
+```
+
+### 2.1 calculate Pearson correlation
+```{r}
+inv <- upright_trust$response
+up <- inverted_trust$response
+results_trust <- trust %>% 
+  group_by(experiment_id) %>% 
+  summarize(pearson = cor.test(up,inv,method = "pearson"))
+```
+
+
+how it should look like if one does not coerce it into a string
+```{r} 
+inv <- upright_trust$response[1]
+up <- inverted_trust$response[1]
+cor.test(up,inv,method = "pearson")
+
+```
+
+How it looks like in the dataframe
+```{r}
+
+results_trust$pearson[1]
+
+```
+
+### 2.2 filter out correlation
+
+Getting the Correlation for every row, adding it as row to the exp_data and converting it back to a numeric
+```{r}
+corr_list <- c()
+row <- 1
+while(row <= nrow(results_trust)){
+  corr <- getCorr(results_trust$pearson[row])
+  corr_list <- c(corr_list, corr)
+  row <- row+1
+}
+```
+
+```{r}
+results_trust$Sensitivity_correlation <- corr_list
+results_trust <- mutate(results_trust, Sensitivity_correlation = as.numeric(corr_list))
+```
+
+
+
+## 3. Sensitivity correlation: dominance
+
+### 3.0 split data in inverted and upright
+```{r}
+upright_dom <- filter(dom, pictureFormat == "Upright")
+inverted_dom <- filter(dom, pictureFormat == "Inverted")
+```
+### 3.1 calculate Pearson correlation
+```{r}
+inv <- upright_dom$response
+up <- inverted_dom$response
+results_dom <- dom %>% 
+  group_by(experiment_id) %>% 
+  summarize(pearson = cor.test(up,inv,method = "pearson"))
+```
+
+
+how it should look like if one does not coerce it into a string
+```{r} 
+inv <- upright_dom$response[1]
+up <- inverted_dom$response[1]
+cor.test(up,inv,method = "pearson")
+
+```
+
+How it looks like in the dataframe
+```{r}
+
+results_dom$pearson[1]
+
+```
+
+
+
+### 3.2 filter out correlation
+
+Getting the Correlation for every row, adding it as row to the exp_data and converting it back to a numeric
+```{r}
+corr_list <- c()
+row <- 1
+while(row <= nrow(results_dom)){
+  corr <- getCorr(results_dom$pearson[row])
+  corr_list <- c(corr_list, corr)
+  row <- row+1
+}
+```
+```{r}
+results_dom$Sensitivity_correlation <- corr_list
+results_dom <- mutate(results_dom, Sensitivity_correlation = as.numeric(corr_list))
+```
+
+## 4 independant sample t-test
+### 4.1 filter out necessary data
+```{r}
+trust_cor <- results_trust$Sensitivity_correlation
+dom_cor <- results_dom$Sensitivity_correlation
+```
+### 4.2 visualize with boxplots
+```{r}
+ boxplot(trust_cor,dom_cor,ylab="correlations of inverted and upright pictures",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5) 
+```
+### 4.3 median and standard deviation
+```{r}
+m_trust <-median(trust_cor)
+sd_trust <- sd(trust_cor)
+print('Trustworthy', quote = FALSE)
+print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
+
+m_dom <- median(dom_cor)
+sd_dom <- sd(dom_cor)
+print("Dominance",  quote = FALSE)
+print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
+
+
+```
+
+###4.4 paired sample t-test
+```{r}
+t.test(trust,dom)
+
+```
+
+### 4.5cohens d
+```{r}
+cohen.d(trust, dom)
+```
+
+```{r}
+
+```
+

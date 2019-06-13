@@ -1,0 +1,47 @@
+---
+title: "01_data preprocessing"
+author: "Fabienne Kock"
+date: "8 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+if necessary:
+```{r}
+install.packages("effsize")
+```
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+```
+## 1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\Subject_data_clean.csv")
+data
+```
+
+## 2. visualize with boxplots
+```{r}
+ggplot(data, aes(x=gender, y=age)) + 
+  geom_boxplot()
+```
+
+## 3. median and standard deviation
+```{r}
+summarized_results <- data %>% 
+  group_by(gender) %>%
+  summarize(mean_age = mean(age))
+summarized_results
+```
+```{r}
+m_age <-median(data$age)
+sd_age <- sd(data$age)
+print('Age', quote = FALSE)
+print(c("Median:", m_age, "Standard deviation:",sd_age), quote = FALSE)
+
+
+```
+

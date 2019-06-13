@@ -1,0 +1,64 @@
+---
+title: "01 data_preprocessing-pilot"
+author: "Fabienne Kock"
+date: "13 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(DescTools)
+library(Rmisc)
+```
+
+
+## 1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\test.csv")
+data
+```
+## filter for trait-test and picture-test and filter out the personal subject data
+```{r}
+trait_data <- filter(data, trial_name == 'rate_personality')
+trait_data <- select(trait_data, trial_number, response, RT, question, timeSpent, experiment_id)
+trait_data
+```
+```{r}
+pic_data <-filter(data, trial_name == 'rate_face')
+pic_data <- select(pic_data, response, RT, picture, pictureFormat, color, category, timeSpent, experiment_id)
+pic_data
+```
+
+```{r}
+
+subj_data <- select(data, category, age, gender, languages, experiment_id)
+subj_data <- group_by(subj_data, category, experiment_id)
+subj_data
+```
+## Further tyding the data up
+
+
+### cleaning up ouliers in the trait-data and pic_data
+
+
+
+
+
+
+## create files with clean data for the analysis
+```{r}
+write_csv(subj_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\Subject_data_clean.csv")
+write_csv(trait_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
+write_csv(pic_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\S1_data_clean.csv")
+```
+
+
