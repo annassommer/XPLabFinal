@@ -1,0 +1,69 @@
+-Background of study:
+
+
+-Why interesting? Where questions coming from?
+
+
+-research question:
+	-question from 1 and 4a
+
+-kind of study:
+	-experimental design
+
+-How many participants? How? Where? When?
+	-how many? as many as possible
+	-how? Social Media, Blackboard studip
+	-where?internet
+	-when?after preregistration for 14 days
+
+-Qualification restrictions?
+	-none
+
+-What materials? How produced?
+	-what?chicago face database, words for personality traits
+	-how? faces: professionally, words: our minds
+
+-Link to material:
+	- https://chicagofaces.org/default/
+
+
+-structure of experiment:
+	- study 4a and 1
+
+-types of trials?
+	-rating
+
+-how is each trial?
+	-presented a trait, asked to rate if for humans or also animals
+	-presented a face and personality trait, asked to rate on scale 1-7
+
+-What variables measured?
+	-response time, rating_domninance, rating_trustworthiness, rating_humanlikeness, age, gender
+
+-How measured?
+	-time, rating(1-7)
+
+-How treated?
+	-response time: interval scale in ms, rating scale: ordinal, age: interval scale, gender: nominal scale
+
+-Criteria for excluded data?
+	-participants excluded if: 
+		-always same answer
+		-pattern answer for at least 3 times
+		-reaction time outside of mean +/- 3times standard deviation interval 
+
+-transformations to data for analysis?
+	
+
+-statistical model(e.g. using brms for bayesian regression with X against A, B and C etc.):
+	-independed sample t test, sensitivity correlation
+	-tidyverse, effsize, readR, desktools, Rmisc
+
+-By what means will hypotheses be tested?
+	- from paper, output of R
+
+-reformulate hypotheses?
+
+
+-remarks:
+	-in german, since friends/family native german speakers

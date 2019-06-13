@@ -1,0 +1,32 @@
+---
+title: "02 data_analysis"
+author: "Fabienne Kock"
+date: "13 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(DescTools)
+library(Rmisc)
+```
+
+## 1. read in the data
+```{r}
+trust_data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_trust_data.csv")
+dom_data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_Dom_data.csv")
+```
+```{r}
+trust_data <- 
+```
+
