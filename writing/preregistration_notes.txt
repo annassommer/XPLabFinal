@@ -2,7 +2,7 @@
 
 
 -Why interesting? Where questions coming from?
-
+	-
 
 -research question:
 	-question from 1 and 4a
@@ -17,7 +17,7 @@
 	-when?after preregistration for 14 days
 
 -Qualification restrictions?
-	-none
+	-german B2
 
 -What materials? How produced?
 	-what?chicago face database, words for personality traits
@@ -56,7 +56,7 @@
 	
 
 -statistical model(e.g. using brms for bayesian regression with X against A, B and C etc.):
-	-independed sample t test, sensitivity correlation
+	-independed sample t test, sensitivity correlation, dominance and trustworthiness paired-samplest-test
 	-tidyverse, effsize, readR, desktools, Rmisc
 
 -By what means will hypotheses be tested?
