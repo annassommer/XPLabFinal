@@ -18,52 +18,62 @@
 
 */
 
+var category = coin;
+
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
 const intro = babeViews.view_generator("intro",{
     trials: 1,
     name: 'intro',
+    title: 'Wilkommen',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
     text:   `
             <br />
             <br />
-            Thank you for participating in this experiment.
+            Danke, dass sie an diesem Experiment teilnehmen.
             <br />
-            This experiment consists of two parts. Firstly you will be shown personality
-            traits and tasked to rate them, then in the second part you will be shown
-            faces and asked to rate them.
+            Das Experiment besteht aus zwei Teilen. Im ersten Teil werden ihnen bestimmte
+            Persönlichkeitsmerkmale gezeigt. Es ist ihre Aufgabe auf einer Skala von
+            1-7 zu bewerten, in wie weit das Merkmal rein menschlich ist, bzw. gleich auf Menschen
+            und Tiere zutrifft.
+            <br />
+            <br />
+            Im zweiten Teil sehen sie  Bilder von Gesichtern. Hier sollen sie auf einer Skala von 1-9 bewerten,
+            wie weit das Persönlichkeitsmerkmal <strong> '` + category + `' </strong> auf das Gesicht zutrifft:
             `,
-   buttonText: 'Begin the experiment'
+   buttonText: 'Begin das Experiment'
 });
 
 // For most tasks, you need instructions views
 const instructions = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
-    title: 'Instructions for personality test',
-    text:  `In this part of the experiment you will be shown a personality trait.
+    title: 'Anleitung zum Persönlichkeitstest',
+    text:  `In diesem Teil des Experiment sehen sie ein Persönlichkeitsmerkmal.
             <br />
-            It is your task to rate this personality trait on how equal they apply
-            to humans and non-humans. 1 stands here for 'Applies Equally to Humans
-            and Non-Humans' and 9 stands for 'Applies Uniquely to Humans'.
+            Es ist ihre Aufgabe auf einer Skala von 1 bis 9 zu bewerten, in wie weit das Merkmal
+            nur auf Menschen oder gleichermaßen auf Menschen und Tiere zutrifft.
+            1 steht hier für 'Trifft gleichermaßen auf Menschen und Tiere zu'
+            und 9 steht hier für 'Trifft nur auf Menschen zu'.
             <br />
             <br />
-            If you are ready to start please press the start button:`,
-    buttonText: 'start the first task.'
+            Wenn sie soweit sind das Experiment zu beginnen drücken sie bitte auf Start:`,
+    buttonText: 'Start'
 });
 
 const instructions_main = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
-    title: 'Instructions for face rating task',
-    text:  `In this part of the experiment you will be shown pictures of faces.
+    title: 'Anleitung zur Gesichtsbewertungsaufgabe',
+    text:  `In diesem Teil des Experiments werden ihnen Fotos von Gesichtern gezeigt.
             <br />
-            All of these faces have been subtly morphed with an artificial face,
-            so none of them are fully human. Please rate them on how humanlike they are.
-            1 stands here for 'Not at all humanlike' and 7 stands for 'Very humanlike'.
+            Es ist ihre Aufgabe auf einer Skala von 1-7 zu bewerten, in wie weit das
+            Persönlichkeitsmerkmal <strong>'`+ category +`'</strong> auf das Gesicht zutrifft. 1 steht hier für
+            'Das Merkmal trifft gar nicht zu', 7 steht für 'das Merkmal trifft total zu.'
             <br />
+            Ihnen werden erst normale Fotos gezeigt, und dann invertierte (auf den Kopf gestellt).
             <br />
-            If you are ready to start please press the start button:`,
-    buttonText: 'start the second task.'
+            Wenn sie soweit sind das Experiment zu beginnen drücken sie bitte auf Start:`,
+    buttonText: 'Start'
 });
 
 
@@ -71,31 +81,31 @@ const instructions_main = babeViews.view_generator("instructions",{
 const post_test = babeViews.view_generator("post_test",{
     trials: 1,
     name: 'post_test',
-    title: 'Additional information',
-    text: 'Answering the following questions is optional, but your answers will help us analyze our results.',
+    title: 'Weitere Informationen',
+    text: 'Bitte beantworten sie die folgenden Fragen.',
 
     // You can change much of what appears here, e.g., to present it in a different language, as follows:
-    // buttonText: 'Weiter',
-    // age_question: 'Alter',
-    // gender_question: 'Geschlecht',
-    // gender_male: 'männlich',
-    // gender_female: 'weiblich',
-    // gender_other: 'divers',
+     buttonText: 'Weiter',
+     age_question: 'Alter',
+     gender_question: 'Geschlecht',
+     gender_male: 'männlich',
+     gender_female: 'weiblich',
+     gender_other: 'divers',
     // edu_question: 'Höchster Bildungsabschluss',
     // edu_graduated_high_school: 'Abitur',
     // edu_graduated_college: 'Hochschulabschluss',
     // edu_higher_degree: 'Universitärer Abschluss',
-    // languages_question: 'Muttersprache',
-    // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
-    // comments_question: 'Weitere Kommentare'
+     languages_question: 'Muttersprache',
+     languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
+     comments_question: 'Weitere Kommentare'
 });
 
 // The 'thanks' view is crucial; never delete it; it submits the results!
 const thanks = babeViews.view_generator("thanks", {
     trials: 1,
     name: 'thanks',
-    title: 'Thank you for taking part in this experiment!',
-    prolificConfirmText: 'Press the button'
+    title: 'Vielen Dank, dass sie an dem Experiment teilgenommen haben.',
+    prolificConfirmText: 'Experiment beenden.'
 });
 
 /** trial (babe's Trial Type Views) below
