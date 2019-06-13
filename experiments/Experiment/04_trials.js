@@ -1,5 +1,10 @@
 // In this file you can specify the trial data for your experiment
-
+var category_verb = '';
+if(coin == "Vertrauenswürdigkeit") {
+  category_verb = "vertrauenswürdig";
+} else {
+  category_verb = "dominant";
+}
 
 const trial_info = {
     rate_pers: [
@@ -28,7 +33,7 @@ const trial_info = {
         optionLeft: "Trifft gleichermaßen auf Menschen und Tiere zu",
         optionRight: "Trifft nur auf Menschen zu",
         QUD: "Wie bewerten sie das folgende Merkmal?",
-        question: "Angemessenheit",
+        question: "Höflichlichkeit",
 
       },
       {
@@ -84,37 +89,37 @@ var images_inverted = [];
 
 for(i = 1; i <=1; i++) {
   images_inverted.push({
-      optionLeft: "Das Merkmal " + coin + "trifft gar nicht zu.",
-      optionRight: "Das Merkmal " + coin + "trifft total zu.",
+      optionLeft: "Gar nicht " + category_verb + "",
+      optionRight: "Sehr " + category_verb + "",
       picture: "images/inverted/Stimulus-Inverted-Black" + i + ".jpg",
-      question: "Wie sehr kann man das Merkmal " + coin + " auf das Gesicht zu?",
+      question: "Wie " + category_verb + " ist dieses Gesicht?",
       pictureFormat: "Inverted",
       color: "Black",
       category: coin
   });
   images_inverted.push({
-      optionLeft: "Das Merkmal " + coin + "trifft gar nicht zu.",
-      optionRight: "Das Merkmal " + coin + "trifft total zu.",
+      optionLeft: "Gar nicht " + category_verb + "",
+      optionRight: "Sehr " + category_verb + "",
       picture: "images/inverted/Stimulus-Inverted-White" + i + ".jpg",
-      question: "Wie sehr kann man das Merkmal " + coin + " auf das Gesicht zu?",
+      question: "Wie " + category_verb + " ist dieses Gesicht?",
       pictureFormat: "Inverted",
       color: "White",
       category: coin
   });
   images_upright.push({
-      optionLeft: "Das Merkmal " + coin + "trifft gar nicht zu.",
-      optionRight: "Das Merkmal " + coin + "trifft total zu.",
+      optionLeft: "Gar nicht " + category_verb + "",
+      optionRight: "Sehr " + category_verb + "",
       picture: "images/upright/Stimulus-Upright-Black" + i + ".jpg",
-      question: "Wie sehr kann man das Merkmal " + coin + " auf das Gesicht zu?",
+      question: "Wie " + category_verb + " ist dieses Gesicht?",
       pictureFormat: "Upright",
       color: "Black",
       category: coin
   });
   images_upright.push({
-      optionLeft: "Das Merkmal " + coin + "trifft gar nicht zu.",
-      optionRight: "Das Merkmal " + coin + "trifft total zu.",
+      optionLeft: "Gar nicht " + category_verb + "",
+      optionRight: "Sehr " + category_verb + "",
       picture: "images/upright/Stimulus-Upright-White" + i + ".jpg",
-      question: "Wie sehr kann man das Merkmal " + coin + " auf das Gesicht zu?",
+      question: "Wie " + category_verb + " ist dieses Gesicht?",
       pictureFormat: "Upright",
       color: "White",
       category: coin

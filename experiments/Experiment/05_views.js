@@ -19,6 +19,12 @@
 */
 
 var category = coin;
+var category_verb = '';
+if(coin == "Vertrauenswürdigkeit") {
+  category_verb = "vertrauenswürdig";
+} else {
+  category_verb = "dominant";
+}
 
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
 const intro = babeViews.view_generator("intro",{
@@ -29,50 +35,54 @@ const intro = babeViews.view_generator("intro",{
     text:   `
             <br />
             <br />
-            Danke, dass sie an diesem Experiment teilnehmen.
+            Danke, dass Sie an diesem Experiment teilnehmen.
             <br />
-            Das Experiment besteht aus zwei Teilen. Im ersten Teil werden ihnen bestimmte
-            Persönlichkeitsmerkmale gezeigt. Es ist ihre Aufgabe auf einer Skala von
-            1-7 zu bewerten, in wie weit das Merkmal rein menschlich ist, bzw. gleich auf Menschen
+            <br />
+            Das Experiment besteht aus zwei Teilen. Im ersten Teil werden Ihnen bestimmte
+            Persönlichkeitsmerkmale gezeigt. Es ist Ihre Aufgabe auf einer Skala von
+            1-9 zu bewerten, inwieweit das Merkmal rein menschlich ist, bzw. gleich auf Menschen
             und Tiere zutrifft.
             <br />
             <br />
-            Im zweiten Teil sehen sie  Bilder von Gesichtern. Hier sollen sie auf einer Skala von 1-9 bewerten,
-            wie weit das Persönlichkeitsmerkmal <strong> '` + category + `' </strong> auf das Gesicht zutrifft:
+            Im zweiten Teil sehen Sie Bilder von Gesichtern. Hier sollen Sie auf einer Skala von 1-7 bewerten,
+            wie weit ein bestimmtes Persönlichkeitsmerkmal auf das Gesicht zutrifft:
             `,
-   buttonText: 'Begin das Experiment'
+   buttonText: 'Beginnen Sie das Experiment'
 });
 
 // For most tasks, you need instructions views
 const instructions = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
-    title: 'Anleitung zum Persönlichkeitstest',
-    text:  `In diesem Teil des Experiment sehen sie ein Persönlichkeitsmerkmal.
+    title: 'Anleitung zum ersten Teil',
+    text:  `In diesem Teil des Experiments sehen Sie ein Persönlichkeitsmerkmal.
             <br />
-            Es ist ihre Aufgabe auf einer Skala von 1 bis 9 zu bewerten, in wie weit das Merkmal
+            Es ist Ihre Aufgabe auf einer Skala von 1 bis 9 zu bewerten, inwieweit das Merkmal
             nur auf Menschen oder gleichermaßen auf Menschen und Tiere zutrifft.
             1 steht hier für 'Trifft gleichermaßen auf Menschen und Tiere zu'
             und 9 steht hier für 'Trifft nur auf Menschen zu'.
             <br />
             <br />
-            Wenn sie soweit sind das Experiment zu beginnen drücken sie bitte auf Start:`,
+            Wenn Sie bereit sind, drücken Sie bitte auf Start:`,
     buttonText: 'Start'
 });
 
 const instructions_main = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
-    title: 'Anleitung zur Gesichtsbewertungsaufgabe',
-    text:  `In diesem Teil des Experiments werden ihnen Fotos von Gesichtern gezeigt.
+    title: 'Anleitung zum zweiten Teil',
+    text:  `In diesem Teil des Experiments werden Ihnen Fotos von Gesichtern gezeigt.
             <br />
-            Es ist ihre Aufgabe auf einer Skala von 1-7 zu bewerten, in wie weit das
-            Persönlichkeitsmerkmal <strong>'`+ category +`'</strong> auf das Gesicht zutrifft. 1 steht hier für
-            'Das Merkmal trifft gar nicht zu', 7 steht für 'das Merkmal trifft total zu.'
+            Es ist Ihre Aufgabe auf einer Skala von 1-7 zu bewerten, inwieweit das
+            Persönlichkeitsmerkmal <strong>'`+ category +`'</strong> auf das Gesicht zutrifft.
+            <br/>
+             1 steht hier für 'Gar nicht ` + category_verb + `',
+            <br/>
+             7 steht für 'Sehr ` + category_verb + `'.
+             <br/>
+            Sie sehen zunächst aufrechte Fotos, und dann auf den Kopf gestellte.
             <br />
-            Ihnen werden erst normale Fotos gezeigt, und dann invertierte (auf den Kopf gestellt).
-            <br />
-            Wenn sie soweit sind das Experiment zu beginnen drücken sie bitte auf Start:`,
+            Wenn Sie bereit sind, drücken Sie bitte auf Start:`,
     buttonText: 'Start'
 });
 
@@ -82,7 +92,7 @@ const post_test = babeViews.view_generator("post_test",{
     trials: 1,
     name: 'post_test',
     title: 'Weitere Informationen',
-    text: 'Bitte beantworten sie die folgenden Fragen.',
+    text: 'Bitte beantworten sie die folgenden Fragen. Felder, die mit einem * markiert sind, sind Pflicht und müssen ausgefüllt werden um das Experiment zu beenden.',
 
     // You can change much of what appears here, e.g., to present it in a different language, as follows:
      buttonText: 'Weiter',
