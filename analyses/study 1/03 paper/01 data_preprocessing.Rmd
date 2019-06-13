@@ -35,7 +35,7 @@ data
 Erase lines that have the same rating for all pictures
 ```{r}
 row_num = 1
-while (row_num <= nrow(exp_data)) {
+while (row_num <= nrow(data)) {
   ratings <- c(data[row_num,] %>% select(ends_with("_upright"),ends_with("_inverted")))
   if(length(unique(ratings[]))== 1) {
 

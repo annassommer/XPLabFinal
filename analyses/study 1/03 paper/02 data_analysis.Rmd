@@ -26,7 +26,215 @@ library(Rmisc)
 trust_data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_trust_data.csv")
 dom_data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_Dom_data.csv")
 ```
+
+## 2. Sensitivity correlation: trust
+
+### 2.0 split data in inverted and transposed
 ```{r}
-trust_data <- 
+upright <- select(trust_data, ID, ends_with("upright"))
+inverted <- select(trust_data, ID, ends_with("inverted"))
+```
+### 2.1 transpose data
+```{r}
+upright_t <- t(upright)
+inverted_t <- t(inverted)
+```
+
+```{r}
+colnames(upright_t) <- upright_t[1,]
+upright_t<-upright_t[-1,]
+colnames(inverted_t) <- inverted_t[1,]
+inverted_t<-inverted_t[-1,]
+```
+
+
+### 2.2 calculate Pearson correlation
+```{r}
+pearson <- c()
+col <- 1
+while(col <= ncol(upright_t)){
+  inv <- as.double(inverted_t[,col])
+  up <- as.double(upright_t[,col])
+  p_val <- cor.test(up,inv,method = "pearson")
+  pearson <- c(pearson, toString(p_val)) 
+  col <- col+ 1
+}
+trust_data$pearson <- pearson
+```
+
+
+how it should look like if one does not coerce it into a string
+```{r} 
+inv <- as.double(inverted_t[,7])
+up <- as.double(upright_t[,7])
+cor.test(up,inv,method = "pearson")
+
+```
+
+How it looks like in the dataframe
+```{r}
+trust_data
+trust_data$pearson[7]
+
+```
+### 2.3 filter out correlation
+Function to split the correlation from the information gained by applying Pearson
+```{r}
+getCorr <- function(row){
+  corr <- strsplit(row, ",")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[4],"=")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[2],"\\)")
+  corr <- corr[[1]]
+return(corr)
+}
+```
+Getting the Correlation for every row, adding it as row to the exp_data and converting it back to a numeric
+```{r}
+corr_list <- c()
+row <- 1
+while(row <= nrow(trust_data)){
+  corr <- getCorr(trust_data$pearson[row])
+  corr_list <- c(corr_list, corr)
+  row <- row+1
+}
+```
+
+```{r}
+trust_data$Sesnsitivity_correlation <- corr_list
+trust_data <- mutate(trust_data, Sensitivity_correlation = as.numeric(corr_list))
+```
+
+
+### 2.4 extract frame with ID pearson, and Sensitivity correlation
+```{r}
+analysed_trust_data <- select(trust_data, ID, pearson, Sensitivity_correlation)
+analysed_trust_data
+```
+## 3. Sensitivity correlation: dominance
+
+### 3.0 split data in inverted and transposed
+```{r}
+upright <- select(dom_data, ID, ends_with("upright"))
+inverted <- select(dom_data, ID, ends_with("inverted"))
+```
+### 3.1 transpose data
+```{r}
+upright_t <- t(upright)
+inverted_t <- t(inverted)
+```
+
+```{r}
+colnames(upright_t) <- upright_t[1,]
+upright_t<-upright_t[-1,]
+colnames(inverted_t) <- inverted_t[1,]
+inverted_t<-inverted_t[-1,]
+```
+
+
+### 3.2 calculate Pearson correlation
+```{r}
+pearson <- c()
+col <- 1
+while(col <= ncol(upright_t)){
+  inv <- as.double(inverted_t[,col])
+  up <- as.double(upright_t[,col])
+  p_val <- cor.test(up,inv,method = "pearson")
+  pearson <- c(pearson, toString(p_val)) 
+  col <- col+ 1
+}
+dom_data$pearson <- pearson
+```
+
+
+how it should look like if one does not coerce it into a string
+```{r} 
+inv <- as.double(inverted_t[,7])
+up <- as.double(upright_t[,7])
+cor.test(up,inv,method = "pearson")
+
+```
+
+How it looks like in the dataframe
+```{r}
+dom_data
+dom_data$pearson[7]
+
+```
+### 3.3 filter out correlation
+Function to split the correlation from the information gained by applying Pearson
+```{r}
+getCorr <- function(row){
+  corr <- strsplit(row, ",")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[4],"=")
+  corr <- corr[[1]]
+  corr <- strsplit(corr[2],"\\)")
+  corr <- corr[[1]]
+return(corr)
+}
+```
+Getting the Correlation for every row, adding it as row to the exp_data and converting it back to a numeric
+```{r}
+corr_list <- c()
+row <- 1
+while(row <= nrow(dom_data)){
+  corr <- getCorr(dom_data$pearson[row])
+  corr_list <- c(corr_list, corr)
+  row <- row+1
+}
+```
+
+```{r}
+dom_data$Sesnsitivity_correlation <- corr_list
+dom_data <- mutate(dom_data, Sensitivity_correlation = as.numeric(corr_list))
+```
+
+
+### 3.4 extract frame with ID pearson, and Sensitivity correlation
+```{r}
+analysed_dom_data <- select(dom_data, ID, pearson, Sensitivity_correlation)
+analysed_dom_data
+```
+
+## 4 independant sample t-test
+### 4.1 filter out necessary data
+```{r}
+trust <- analysed_trust_data$Sensitivity_correlation
+dom <- analysed_dom_data$Sensitivity_correlation
+```
+### 4.2 visualize with boxplots
+```{r}
+ boxplot(trust,dom,ylab="correlations of inverted and upright pictures",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5) 
+```
+### 4.3 median and standard deviation
+```{r}
+m_trust <-median(trust)
+sd_trust <- sd(trust)
+print('Trustworthy', quote = FALSE)
+print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
+
+m_dom <- median(dom)
+sd_dom <- sd(dom)
+print("Dominance",  quote = FALSE)
+print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
+
+
+```
+
+###4.4 paired sample t-test
+```{r}
+t.test(trust,dom)
+
+```
+
+### 4.5cohens d
+```{r}
+cohen.d(trust, dom)
+```
+
+```{r}
+
 ```
 
