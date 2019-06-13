@@ -1,9 +1,9 @@
 # Experimental Psychology
 
 ## Final project
-Replicating the study 4a and 4b of the paper
+Replicating the study 1 and 4a of the paper
 "Configural processing and social judgments Face inversion particularly disrupts inferences of human-relevant traits"
-by Wilson from 2018.
+by Wilson et al. from 2018.
 
 ### Time schedule
 

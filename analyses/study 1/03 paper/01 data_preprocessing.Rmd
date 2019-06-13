@@ -1,0 +1,90 @@
+---
+title: "01 data_preprocessing"
+author: "Fabienne Kock"
+date: "9 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+library(dplyr)
+library(readr)
+```
+## 1. read in the data
+```{r}
+header <- read_csv("C:\\Users\\sarah\\Documents\\Final_Xlab\\XPLabFinal\\data\\03 paper\\raw\\S1.csv", n_max = 1)
+data <- read_csv("C:\\Users\\sarah\\Documents\\Final_Xlab\\XPLabFinal\\data\\03 paper\\raw\\S1.csv", col_names =  FALSE ,skip = 2)
+names(data)<- paste(names(header), header[1, ], sep = "_")
+```
+## 2. correct column-labels and filter out the condition
+```{r}
+data <- rename(data, ID = ResponseID_ResponseID, condition = Cond_Cond,
+               race = `Race_Please indicate your race:`,
+               age = `Age_What is your age? (To the nearest year, please enter a whole number / below).`,
+               gender = `Gender_Please indicate your gender:` )
+data <- select(data, ID, condition, ends_with("_upright"), ends_with("_inverted"),  race, age, gender)
+data
+```
+
+## 3. clean data
+Erase lines that have the same rating for all pictures
+```{r}
+row_num = 1
+while (row_num <= nrow(data)) {
+  ratings <- c(data[row_num,] %>% select(ends_with("_upright"),ends_with("_inverted")))
+  if(length(unique(ratings[]))== 1) {
+
+    data <- data[-row_num, ]
+  }
+    #filters the muster 1,2,3,4,5,6,7
+  i = 1
+  muster = 1
+  counter = 0
+  del = 0
+  while (i<= length(ratings)){
+    if (muster == ratings[i]){
+      counter = counter +1
+    }
+    muster = 1
+    if (muster == 7){
+      muster = 1
+      if (counter == 7){
+        del = del +1
+      }
+    }
+    i = i+1
+  }
+  if (del >= 3){
+    data <- data[-row_num, ]
+  }
+  if ((data[row_num, ] < 3*sd(RT)) ||(data[row_num, ] > 3*sd(RT)) ){
+    data <- data[-row_num, ]
+  }
+
+  row_num = row_num + 1
+}
+    
+```
+
+## 4. split data into conditions: trust-data and Dom-data
+```{r}
+cond_data <- select(data, ID ,condition, ends_with("_upright"),ends_with("_inverted"))
+trust_data <- filter(cond_data, condition == 'Trust')
+dom_data <- filter(cond_data, condition == 'Dom')
+
+
+```
+
+## 5. export processed data
+```{r}
+write_csv(trust_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_trust_data.csv")
+write_csv(dom_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\03 paper\\clean\\S1_Dom_data.csv")
+```
+
+
+
