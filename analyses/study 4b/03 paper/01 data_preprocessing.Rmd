@@ -27,6 +27,7 @@ data <- rename(data, ID = ResponseID_ResponseID,
               race = `Race_Please indicate your race:`,
               age = `Age_What is your age? (To the nearest year, please enter a whole number / below).`,
               gender = `Gender_Please indicate your gender:`)
+
 data <- select(data, ID, ends_with("_upright"), ends_with("_inverted"),  race, age, gender)
 ```
 
