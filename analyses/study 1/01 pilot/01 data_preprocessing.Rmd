@@ -38,16 +38,19 @@ pic_data <- select(pic_data, response, RT, picture, pictureFormat, color, catego
 pic_data
 ```
 
+### clean the subject data to only include every id once
 ```{r}
 
 subj_data <- select(data, category, age, gender, languages, experiment_id)
-subj_data <- group_by(subj_data, category, experiment_id)
+subj_data <- filter(subj_data, complete.cases(category))
+subj_data <- subj_data[!duplicated(subj_data$experiment_id), ]
 subj_data
 ```
 ## Further tyding the data up
 
 
 ### cleaning up ouliers in the trait-data and pic_data
+
 
 
 

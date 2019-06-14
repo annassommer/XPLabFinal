@@ -25,16 +25,17 @@ data
 
 ## 2. visualize with boxplots
 ```{r}
-ggplot(data, aes(x=gender, y=age)) + 
+ggplot(data, aes(x=gender, y=age, fill = gender)) + 
   geom_boxplot()
 ```
 
 ## 3. median and standard deviation
 ```{r}
-summarized_results <- data %>% 
-  group_by(gender) %>%
-  summarize(mean_age = mean(age))
+summarized_results <- data %>%
+  dplyr::group_by(gender) %>%
+  dplyr::summarize(mean_age = mean(age))
 summarized_results
+group_by
 ```
 ```{r}
 m_age <-median(data$age)

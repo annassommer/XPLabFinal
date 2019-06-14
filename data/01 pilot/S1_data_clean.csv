@@ -1,5 +1,9 @@
 response,RT,picture,pictureFormat,color,category,timeSpent,experiment_id
-4,1521,images/upright/Stimulus-Upright-Black1.jpg,Upright,Black,Dominanz,2.071266666666667,INSERT_A_NUMBER
-4,499,images/upright/Stimulus-Upright-White1.jpg,Upright,White,Dominanz,2.071266666666667,INSERT_A_NUMBER
-4,564,images/inverted/Stimulus-Inverted-Black1.jpg,Inverted,Black,Dominanz,2.071266666666667,INSERT_A_NUMBER
-4,669,images/inverted/Stimulus-Inverted-White1.jpg,Inverted,White,Dominanz,2.071266666666667,INSERT_A_NUMBER
+2,4224,images/upright/Stimulus-Upright-White1.jpg,Upright,White,Vertrauenswürdigkeit,1.0410333333333333,1
+3,1814,images/upright/Stimulus-Upright-Black1.jpg,Upright,Black,Vertrauenswürdigkeit,1.0410333333333333,1
+5,3875,images/inverted/Stimulus-Inverted-Black1.jpg,Inverted,Black,Vertrauenswürdigkeit,1.0410333333333333,1
+3,3224,images/inverted/Stimulus-Inverted-White1.jpg,Inverted,White,Vertrauenswürdigkeit,1.0410333333333333,1
+4,1521,images/upright/Stimulus-Upright-Black1.jpg,Upright,Black,Dominanz,2.071266666666667,2
+4,499,images/upright/Stimulus-Upright-White1.jpg,Upright,White,Dominanz,2.071266666666667,2
+4,564,images/inverted/Stimulus-Inverted-Black1.jpg,Inverted,Black,Dominanz,2.071266666666667,2
+4,669,images/inverted/Stimulus-Inverted-White1.jpg,Inverted,White,Dominanz,2.071266666666667,2

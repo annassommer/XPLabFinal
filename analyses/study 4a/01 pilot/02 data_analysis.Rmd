@@ -27,10 +27,13 @@ data
 ```{r}
 trust <- filter(data, question == "Vertrauenswürdigkeit")
 dom <- filter(data, question == "Dominanz")
+d_t <- rbind(trust,dom)
 ```
 3. visualize with boxplots
 ```{r}
- boxplot(trust$response,dom$response,ylab="rating of being uniquely human",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5) 
+ggplot(d_t, aes(x= question, y= response, fill = question)) + 
+  geom_boxplot()
+
 ```
 
 4. median and standard deviation
