@@ -35,7 +35,6 @@ summarized_results <- data %>%
   dplyr::group_by(gender) %>%
   dplyr::summarize(mean_age = mean(age))
 summarized_results
-group_by
 ```
 ```{r}
 m_age <-median(data$age)

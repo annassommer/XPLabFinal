@@ -1,3 +1,4 @@
 category,age,gender,languages,experiment_id
-Vertrauenswürdigkeit,24,männlich,NA,1
-Dominanz,20,weiblich,NA,2
+Vertrauenswürdigkeit,20,weiblich,deutsch,1
+Dominanz,23,weiblich,Französisch,2
+Dominanz,22,weiblich,NA,3

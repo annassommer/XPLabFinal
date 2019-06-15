@@ -13,17 +13,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(effsize)
-library(dplyr)
 library(readr)
 library(tidyr)
 library(DescTools)
 library(Rmisc)
+library(dplyr)
 ```
 
 
 ## 1. read in the data
 ```{r}
-data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\test.csv")
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\data_all.csv")
 data
 ```
 ## filter for trait-test and picture-test and filter out the personal subject data
