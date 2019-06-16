@@ -151,7 +151,8 @@ trust_cor
 
 ### 4.2 visualize with boxplots
 ```{r}
- boxplot(trust_cor,dom_cor,ylab="correlations of inverted and upright pictures",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5) 
+ boxplot(trust_cor,dom_cor,ylab="correlations of inverted and upright pictures",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5,  whisklty = 1) 
+
 ```
 ### 4.3 median and standard deviation
 ```{r}

@@ -29,7 +29,7 @@ ggplot(data, aes(x=gender, y=age, fill = gender)) +
   geom_boxplot()
 ```
 
-## 3. median and standard deviation
+## 3. median and standard deviation of age
 ```{r}
 summarized_results <- data %>%
   dplyr::group_by(gender) %>%
