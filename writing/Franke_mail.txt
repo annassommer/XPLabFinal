@@ -1,0 +1,25 @@
+Dear Daniel (if I may):
+
+This is good work! Still, it’s my job to be critical, so I need to say that more work is needed.
+
+Attached is a PDF with annotations on the actual report. As you can see, there are quite a number of points that need to be elaborated on. The points highlighted are just examples.
+
+# Description of the experiment
+
+Please think of the preregstration report as a completely exhaustive and stand-alone description of the experiment. If you give your preregistration report to several people and they all independently realize your experiment based on the information in the report alone, the resulting experiment should be the same (ideally). This will clearly not be the case for your report.
+
+To give you an impression how this could look, here’s an example of a rather verbose report from a recent paper I collaborated on: https://osf.io/hpv93 Your report does not need to be /that/ detailed but try to make it more self-contained.
+
+# Hypotheses & Analysis
+
+It is most important that you clearly define the hypotheses that you want to test and that you describe in the report how you test them. Although I made notes in the PDF about using Bayes and regression, it is fine if you want to stick with the analyses of the original paper. But make clear(er) how exactly the hypotheses are tested in the report.
+
+# Next steps
+
+Please revise the report according to these suggestions and resend it together with (i) a link to the implemented experiment, (ii) a small sample data set that you used to test / implement the data analysis scripts, (iii) the scripts themselves. - I’d have another look, and then we can start data collection.
+
+Keep up the good work!
+
+Best,
+Michael
+
