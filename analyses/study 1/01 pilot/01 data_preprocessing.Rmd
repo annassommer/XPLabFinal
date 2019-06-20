@@ -23,7 +23,7 @@ library(dplyr)
 
 ## 1. read in the data
 ```{r}
-data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\data_all.csv")
+data <- read_csv("C:\\Users\\sarah\\Documents\\Final_Xlab\\XPLabFinal\\data\\01 pilot\\data_all.csv")
 data
 ```
 ## filter for trait-test and picture-test and filter out the personal subject data
@@ -46,11 +46,79 @@ subj_data <- filter(subj_data, complete.cases(category))
 subj_data <- subj_data[!duplicated(subj_data$experiment_id), ]
 subj_data
 ```
-## Further tyding the data up
+## cleaning up ouliers in the trait-data and pic_data
+
+```{r}
 
 
-### cleaning up ouliers in the trait-data and pic_data
+id_num = pic_data[1,"experiment_id"]
+counter = 1
 
+
+while(id_num <= lengths(unique(pic_data["experiment_id"]))){
+
+
+id_data_pic <- filter(pic_data, experiment_id == id_num[1,1] )
+id_data_trait <-  filter(trait_data, experiment_id == id_num[1,1] )
+
+ratings_pic <- id_data_pic["response"]
+ratings_trait <- id_data_trait["response"]
+
+rt_pic <- id_data_pic["RT"]
+rt_all_pic <- sd(pic_data[["RT"]])
+rt_trait <- id_data_trait["RT"]
+rt_all_trait <- sd(trait_data[["RT"]])
+
+if(lengths(unique(ratings_pic))== 1 | lengths(unique(ratings_trait))== 1) {
+
+    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
+    all_same_data <- id_data }
+    
+ #filters the muster 1,2,3,4,5,6,7
+  i = 1
+  muster = 1
+  counter = 0
+  del = 0
+  while (i <= lengths(ratings)){
+    if (muster == ratings[i,1]){
+      counter = counter +1
+    }
+    muster = muster +1
+    if (muster == 7){
+      muster = 1
+    if (counter == 7){
+        del = del +1
+        counter = 0
+      }
+    }
+    i = i+1
+  }
+  if (del >= 4){
+    muster_data <- id_data
+    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
+  }
+  
+if((colMeans(rt_pic) < (rt_all_pic - (rt_all_pic*3 - rt_all_pic))| colMeans(rt_pic) > rt_all_pic*3)| (colMeans(rt_trait) < (rt_all_trait -(rt_all_trait*3 - rt_all_trait)) | colMeans(rt_trait) > rt_all_trait*3)){
+   rt_data <- id_data
+    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
+  }
+  
+
+  id_num = id_num + 1
+}
+
+```
+
+### count the outliers
+
+
+```{r}
+#num_out_same <- lengths(unique(all_same_data ["experiment_id"]))
+num_out_muster <- lengths(unique(muster_data ["experiment_id"]))
+num_out_rt <- lengths(unique(rt_data ["experiment_id"]))
+
+
+```
 
 
 
