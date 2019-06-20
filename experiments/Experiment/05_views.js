@@ -26,6 +26,13 @@ if(coin == "Vertrauenswürdigkeit") {
   category_verb = "dominant";
 }
 
+var textStudy2 = '';
+if(balance == 'InvFirst') {
+  textStudy2 = 'Sie sehen zunächst auf den Kopf gestellte Fotos, und dann aufrechte.'
+} else {
+  textStudy2 = 'Sie sehen zunächst aufrechte Fotos, und dann auf den Kopf gestellte.'
+}
+
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
 const intro = babeViews.view_generator("intro",{
     trials: 1,
@@ -80,8 +87,8 @@ const instructions_main = babeViews.view_generator("instructions",{
             <br/>
              7 steht für 'Sehr ` + category_verb + `'.
              <br/>
-            Sie sehen zunächst aufrechte Fotos, und dann auf den Kopf gestellte.
-            <br />
+             ` + textStudy2 + `
+             <br />
             Wenn Sie bereit sind, drücken Sie bitte auf Start:`,
     buttonText: 'Start'
 });

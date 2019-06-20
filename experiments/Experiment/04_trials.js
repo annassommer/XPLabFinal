@@ -125,7 +125,12 @@ for(i = 1; i <=36; i++) {
       category: coin
   });
 }
+
 shuffle(images_upright);
 shuffle(images_inverted);
-trial_info.rate_face = images_upright.concat(images_inverted);
+if(balance == 'InvFirst') {
+  trial_info.rate_face = images_inverted.concat(images_upright);
+} else {
+  trial_info.rate_face = images_upright.concat(images_inverted);
+}
 shuffle(trial_info.rate_pers);

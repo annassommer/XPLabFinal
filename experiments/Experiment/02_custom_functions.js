@@ -5,6 +5,7 @@
 *
 */
 const coin = _.sample(["Vertrauenswürdigkeit", "Dominanz"]); // You can determine global (random) parameters here
+const balance = _.sample(["InvFirst", "NonInvFirst"]);
 // Declare your variables here
 
 // shuffle an array
