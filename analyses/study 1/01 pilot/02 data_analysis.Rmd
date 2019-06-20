@@ -200,6 +200,11 @@ var.test(cor ~ group, data = my_data)
 ```{r}
 t.test(trust_cor,dom_cor,alternative = "two.sided", var.equal = FALSE)
 ```
+whether the average dominance correlation is less than the average trust correlation
+```{r}
+t.test(cor ~ group, data = my_data,
+        var.equal = TRUE, alternative = "less")
+```
 
 ### 4.5 cohens d
 ```{r}

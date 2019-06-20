@@ -41,7 +41,7 @@ return(corr)
 data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\01 pilot\\S1_data_clean.csv")
 data
 ```
-## 1.1 create a df for the results
+## 1.1 create a dataframe for the results
 ```{r}
 trust <- filter(data, category == "Vertrauenswürdigkeit")
 dom <- filter(data, category == "Dominanz")
@@ -169,14 +169,11 @@ print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
 
 ```
 
-###4.4 paired sample t-test
+###4.4 ordinal regression
 ```{r}
-t.test(trust_cor,dom_cor)
+
+
 
 ```
 
-### 4.5 cohens d
-```{r}
-cohen.d(trust_cor, dom_cor)
-```
 

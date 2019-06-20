@@ -10,12 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 if necessary:
 ```{r}
-install.packages("effsize")
+install.packages("MASS")
 ```
 packages
 ```{r}
-library(tidyverse)
 library(effsize)
+library(MASS)
+library(tidyverse)
 ```
 1. read in the data
 ```{r}
@@ -69,3 +70,5 @@ t.test(trust$response,dom$response,paired=TRUE)
 ```{r}
 cohen.d(trust$response, dom$response, paired = TRUE)
 ```
+
+
