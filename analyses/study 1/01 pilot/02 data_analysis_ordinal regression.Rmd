@@ -22,7 +22,6 @@ library(broom)
 library(purrr)
 library(tidyr)
 library(dplyr)
-library(ggpubr)
 ```
 Function to split the correlation from the information gained by applying Pearson
 ```{r}
@@ -135,7 +134,6 @@ for(elem in pearson){
 }
 ```
 ```{r}
-
 Sensitivity_correlation_dom <- as.numeric(Sensitivity_correlation_dom)
 Sensitivity_correlation_dom
 ```
@@ -146,63 +144,39 @@ Sensitivity_correlation_dom
 ```{r}
 trust_cor <- Sensitivity_correlation_trust
 dom_cor <- Sensitivity_correlation_dom
-
-my_data <- data.frame( 
-                group = rep(c("Trsustworthy", "Dominance"), each = 2),
-                cor = c(trust_cor,  dom_cor)
-                )
 ```
-
-
+```{r}
+trust_cor
+```
 
 ### 4.2 visualize with boxplots
 ```{r}
-ggboxplot(my_data, x = "group", y = "cor", 
-          color = "group", palette = c("#00AFBB", "#E7B800"),
-        ylab = "Sensitivity Correlation", xlab = "Groups")
+ boxplot(trust_cor,dom_cor,ylab="correlations of inverted and upright pictures",names=c("trustworthy","dominant"), col=c("tomato","cyan"),boxwex=0.5,  whisklty = 1) 
 
 ```
 ### 4.3 median and standard deviation
 ```{r}
-dplyr::group_by(my_data, group) %>%
-  dplyr::summarise(
-    median = median(cor, na.rm = TRUE),
-    mean = mean(cor, na.rm = TRUE),
-    sd = sd(cor, na.rm = TRUE)
-  )
+m_trust <-median(trust_cor)
+sd_trust <- sd(trust_cor)
+print('Trustworthy', quote = FALSE)
+print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
 
-
-#m_trust <-median(trust_cor)
-#sd_trust <- sd(trust_cor)
-#print('Trustworthy', quote = FALSE)
-#print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
-
-#m_dom <- median(dom_cor)
-#sd_dom <- sd(dom_cor)
-#print("Dominance",  quote = FALSE)
-#print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
+m_dom <- median(dom_cor)
+sd_dom <- sd(dom_cor)
+print("Dominance",  quote = FALSE)
+print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
 
 
 ```
 
-###4.4 shapoiro test
+###4.4 paired sample t-test
 ```{r}
-shapiro.test(trust_cor)
-shapiro.test(dom_cor)
-```
-###4.5 F-test
-```{r}
-var.test(cor ~ group, data = my_data)
-```
+t.test(trust_cor,dom_cor)
 
-
-### 4.6 independant sample t-test
-```{r}
-t.test(trust_cor,dom_cor,alternative = "two.sided", var.equal = FALSE)
 ```
 
 ### 4.5 cohens d
 ```{r}
-cohen.d(trust_cor, dom_cor,alternative = "two.sided", var.equal = FALSE)
+cohen.d(trust_cor, dom_cor)
 ```
 

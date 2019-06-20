@@ -28,6 +28,7 @@ data
 trust <- filter(data, question == "Vertrauenswürdigkeit")
 dom <- filter(data, question == "Dominanz")
 d_t <- rbind(trust,dom)
+d_t
 ```
 3. visualize with boxplots
 ```{r}
@@ -36,22 +37,29 @@ ggplot(d_t, aes(x= question, y= response, fill = question)) +
 
 ```
 
-4. median and standard deviation
+4. median, mean and standard deviation
 ```{r}
-m_trust <-median(trust$response)
-sd_trust <- sd(trust$response)
-print('Trustworthy', quote = FALSE)
-print(c("Median:", m_trust, "Standard deviation:",sd_trust), quote = FALSE)
-
-m_dom <- median(dom$response)
-sd_dom <- sd(dom$response)
-print("Dominance",  quote = FALSE)
-print(c("Median:", m_dom, "Standard deviation:",sd_dom), quote = FALSE)
+dplyr::group_by(d_t, question) %>%
+  dplyr::summarise(
+    median = median(response, na.rm = TRUE),
+    mean = mean(response, na.rm = TRUE),
+    sd = sd(response, na.rm = TRUE)
+  )
 
 
 ```
 
 5. paired sample t-test
+5.1shapoiro test
+```{r}
+shapiro.test(trust$response)
+shapiro.test(dom$response)
+```
+5.2 F-test
+```{r}
+var.test(response ~ question, data = d_t)
+```
+5.3 t-test ( applicable if the p for the shapiro and the f_test are abpove the significance level alpha of 0.05)
 ```{r}
 t.test(trust$response,dom$response,paired=TRUE)
 
