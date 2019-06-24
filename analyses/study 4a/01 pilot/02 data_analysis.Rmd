@@ -10,12 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 if necessary:
 ```{r}
-install.packages("MASS")
+install.packages("brms")
 ```
 packages
 ```{r}
 library(effsize)
-library(MASS)
+library(brms)
 library(tidyverse)
 ```
 1. read in the data
@@ -29,7 +29,13 @@ data
 trust <- filter(data, question == "Vertrauenswürdigkeit")
 dom <- filter(data, question == "Dominanz")
 d_t <- rbind(trust,dom)
+trust
+dom
 d_t
+regression_data$Dom <- dom$response
+regression_data$Trust <- trust$response
+regression_data
+
 ```
 3. visualize with boxplots
 ```{r}
@@ -69,6 +75,11 @@ t.test(trust$response,dom$response,paired=TRUE)
 6.cohens d
 ```{r}
 cohen.d(trust$response, dom$response, paired = TRUE)
+
 ```
+```{r}
+analyse <- brm(response ~ question$VertrauenswÜrdigkeit + question$Dominanz)
+```
+
 
 

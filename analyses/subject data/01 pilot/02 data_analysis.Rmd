@@ -33,15 +33,8 @@ ggplot(data, aes(x=gender, y=age, fill = gender)) +
 ```{r}
 summarized_results <- data %>%
   dplyr::group_by(gender) %>%
-  dplyr::summarize(mean_age = mean(age))
+  dplyr::summarize(mean_age = mean(age), median_age = median(age), sd_age = sd(age))
 summarized_results
 ```
-```{r}
-m_age <-median(data$age)
-sd_age <- sd(data$age)
-print('Age', quote = FALSE)
-print(c("Median:", m_age, "Standard deviation:",sd_age), quote = FALSE)
 
-
-```
 
