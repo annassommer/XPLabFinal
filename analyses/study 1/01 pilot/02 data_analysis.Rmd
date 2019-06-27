@@ -222,7 +222,7 @@ model_1 <- brm(formula = response ~ category, family = "cumulative", data = data
 model_2<- brm(formula = response ~ category + pictureFormat, family = "cumulative", data = data)
 ```
 ```{r}
-model_3 <-brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data)
+model_3 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data)
 model_3
 ```
 
@@ -231,9 +231,12 @@ model_4 <- brm(formula = response ~ category + (1|experiment_id), family = "cumu
 ```
 
 ```{r}
-model_5 <- 
+model_5 <- brm(formula = response ~ category + pictureFormat + (1|experiment_id), family = "cumulative", data = data)
 ```
 
+```{r}
+model_6 <- brm(formula = response ~ category + (category|pictureFormat) + (1|experiment_id), family = "cumulative", data = data)
+```
 
 ```{r}
 model_1
