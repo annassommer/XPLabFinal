@@ -2,7 +2,9 @@
 title: "02 data_analysis"
 author: "Fabienne Kock"
 date: "13 6 2019"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -41,6 +43,14 @@ model_5 <- brm(formula = response ~ category + pictureFormat + (1|experiment_id)
 ```
 ```{r}
 model_6 <- brm(formula = response ~ category + (category|pictureFormat) + (1|experiment_id), family = "cumulative", data = data)
+```
+```{r}
+model_1
+model_2
+model_3
+model_4
+model_5
+model_6
 ```
 
 ##comparing the models to find the best
