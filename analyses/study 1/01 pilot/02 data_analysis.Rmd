@@ -23,6 +23,7 @@ library(purrr)
 library(tidyr)
 library(dplyr)
 library(ggpubr)
+library(brms)
 ```
 Function to split the correlation from the information gained by applying Pearson
 ```{r}
@@ -151,6 +152,7 @@ my_data <- data.frame(
                 group = rep(c("Trsustworthy", "Dominance"), each = 2),
                 cor = c(trust_cor,  dom_cor)
                 )
+my_data
 ```
 
 
@@ -210,5 +212,42 @@ t.test(cor ~ group, data = my_data,
 ```{r}
 cohen.d(trust_cor, dom_cor, alternative = "two.sided", var.equal = FALSE)
 cohen.d( dom_cor, trust_cor, alternative = "two.sided", var.equal = FALSE)
+```
+
+-> bayesian regression between Dominanz and Trustworthyness
+```{r}
+model_1 <- brm(formula = response ~ category, family = "cumulative", data = data)
+```
+```{r}
+model_2<- brm(formula = response ~ category + pictureFormat, family = "cumulative", data = data)
+```
+```{r}
+model_3 <-brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data)
+model_3
+```
+
+```{r}
+model_4 <- brm(formula = response ~ category + (1|experiment_id), family = "cumulative", data = data)
+```
+
+```{r}
+model_5 <- 
+```
+
+
+```{r}
+model_1
+model_2
+loo1 <-loo(model_1)
+loo2 <-loo(model_2)
+```
+```{r}
+loo1
+loo2
+```
+
+```{r}
+
+loo_compare(loo1,loo2)
 ```
 
