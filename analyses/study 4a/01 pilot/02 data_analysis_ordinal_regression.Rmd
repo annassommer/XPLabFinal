@@ -1,0 +1,53 @@
+---
+title: "02 data_analysis_ordinal_regression"
+author: "Fabienne Kock"
+date: "8 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+packages
+```{r}
+library(effsize)
+library(brms)
+library(tidyverse)
+library(readr)
+```
+1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\FabienneK\\Documents\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
+data
+```
+
+2 filter out necessary data
+```{r}
+trust <- filter(data, question == "Vertrauenswürdigkeit")
+dom <- filter(data, question == "Dominanz")
+d_t <- rbind(trust,dom)
+trust
+dom
+d_t
+```
+3. visualize with boxplots
+```{r}
+ggplot(d_t, aes(x= question, y= response, fill = question)) + 
+  geom_boxplot()
+
+```
+
+4. median, mean and standard deviation
+```{r}
+dplyr::group_by(d_t, question) %>%
+  dplyr::summarise(
+    median = median(response, na.rm = TRUE),
+    mean = mean(response, na.rm = TRUE),
+    sd = sd(response, na.rm = TRUE)
+  )
+
+
+```
+```{r}
+analyse <- brm(response ~ question + (1|experiment_id), family = "cumulative", data=d_t)
+```

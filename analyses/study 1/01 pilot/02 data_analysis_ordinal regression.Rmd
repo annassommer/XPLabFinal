@@ -10,6 +10,11 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r}
+install.packages("tidyverse")
+install.packages("readr")
+install.packages("brms")
+```
 
 
 packages
@@ -35,22 +40,12 @@ model_2 <- brm(formula = response ~ category + pictureFormat, family = "cumulati
 ```{r}
 model_3 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data)
 ```
-```{r}
-model_4 <- brm(formula = response ~ category + (1|experiment_id), family = "cumulative", data = data)
-```
-```{r}
-model_5 <- brm(formula = response ~ category + pictureFormat + (1|experiment_id), family = "cumulative", data = data)
-```
-```{r}
-model_6 <- brm(formula = response ~ category + (category|pictureFormat) + (1|experiment_id), family = "cumulative", data = data)
-```
+
 ```{r}
 model_1
 model_2
 model_3
-model_4
-model_5
-model_6
+
 ```
 
 ##comparing the models to find the best
@@ -58,19 +53,13 @@ model_6
 loo1 <- loo(model_1)
 loo2 <- loo(model_2)
 loo3 <- loo(model_3)
-loo4 <- loo(model_4)
-loo5 <- loo(model_5)
-loo6 <- loo(model_6)
 ```
 ```{r}
 loo1
 loo2
 loo3
-loo4
-loo5
-loo6
 ```
 ```{r}
-loo_compare(loo1,loo2,loo3,loo4,loo5,loo6)
+loo_compare(loo1,loo2,loo3)
 ```
 
