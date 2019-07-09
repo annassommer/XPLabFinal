@@ -17,18 +17,19 @@ library(readr)
 ```
 1. read in the data
 ```{r}
-data <- read_csv("C:\\Users\\FabienneK\\Documents\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
-data
+input <- read_csv("C:\\Users\\FabienneK\\Documents\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
+input
+```
+```{r}
+install.packages("Rtools")
 ```
 
 2 filter out necessary data
 ```{r}
-trust <- filter(data, question == "Vertrauenswürdigkeit")
-dom <- filter(data, question == "Dominanz")
-d_t <- rbind(trust,dom)
-trust
-dom
-d_t
+trust <- filter(input, question == "Vertrauenswürdigkeit")
+dom <- filter(input, question == "Dominanz")
+data <- rbind(trust,dom)
+
 ```
 3. visualize with boxplots
 ```{r}
@@ -49,5 +50,5 @@ dplyr::group_by(d_t, question) %>%
 
 ```
 ```{r}
-analyse <- brm(response ~ question + (1|experiment_id), family = "cumulative", data=d_t)
+analyse <- brm(formula = response ~ question + (1|experiment_id), family = "cumulative", data=data)
 ```
