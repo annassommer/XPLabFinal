@@ -17,11 +17,16 @@ library(readr)
 ```
 1. read in the data
 ```{r}
+<<<<<<< HEAD
 input <- read_csv("C:\\Users\\FabienneK\\Documents\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
 input
 ```
 ```{r}
 install.packages("Rtools")
+=======
+data <- read_csv("C:\\Users\\Daniel\\XPLab\\XPLabFinal\\data\\01 pilot\\S4a_data_clean.csv")
+data
+>>>>>>> 64a6684c3a0fc1b2c0370b41ccb4585d39796c61
 ```
 
 2 filter out necessary data
