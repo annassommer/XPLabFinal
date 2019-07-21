@@ -1,0 +1,50 @@
+---
+title: "01_data preprocessing"
+author: "Fabienne Kock"
+date: "8 6 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+if necessary:
+```{r}
+install.packages("contrib.url")
+```
+packages
+```{r}
+library(tidyverse)
+library(effsize)
+```
+## 1. read in the data
+```{r}
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\clean\\Subject_data.csv")
+data
+```
+
+## 2. visualize with boxplots
+```{r}
+ggplot(data, aes(x=gender, y=age, fill = gender)) + 
+  geom_boxplot()
+```
+
+## 3. median and standard deviation of age
+```{r}
+summarized_results <- data %>%
+  dplyr::group_by(gender) %>%
+  dplyr::summarize(mean_age = mean(age), median_age = median(age), sd_age = sd(age))
+summarized_results
+```
+
+## number of male/female participants:
+```{r}
+male <-sum(data$gender == "männlich")
+female <-sum(data$gender == "weiblich")
+
+print("Männliche Teilnehmer: ")
+print(male)
+print("weibliche Teilnehmer: ")
+print(female)
+```
+
