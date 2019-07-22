@@ -8,10 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-if necessary:
-```{r}
-install.packages("contrib.url")
-```
+
 packages
 ```{r}
 library(tidyverse)

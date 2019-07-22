@@ -32,6 +32,7 @@ data
 trait_data <- filter(data, trial_name == 'rate_personality')
 trait_data <- select(trait_data, trial_number, response, RT, question, timeSpent, submission_id)
 trait_data
+write_csv(trait_data, "C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\clean\\S4a_data_test.csv")
 ```
 ```{r}
 pic_data <-filter(data, trial_name == 'rate_face')
@@ -134,18 +135,9 @@ num_out_muster <- length(unique(muster_data)) -1
 num_out_rt <- lengths(unique(rt_data)) -1
 ```
 
-
-## create files with clean data for the analysis
 ```{r}
-write_csv(subj_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\clean\\Subject_data_clean.csv")
-write_csv(trait_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\S4a_data_clean.csv")
-write_csv(pic_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\S1_data_clean.csv")
+trait_data
 ```
-
-
-
-
-
 
 ## create files with clean data for the analysis
 ```{r}

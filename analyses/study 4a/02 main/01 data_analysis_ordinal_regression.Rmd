@@ -17,7 +17,7 @@ library(readr)
 ```
 1. read in the data
 ```{r}
-data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\clean\\S4a_data.csv")
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\clean\\S4a_data_test.csv")
 data
 ```
 
