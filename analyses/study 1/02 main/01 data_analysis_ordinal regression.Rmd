@@ -36,6 +36,13 @@ model_2 <- brm(formula = response ~ category + pictureFormat, family = "cumulati
 ```{r}
 model_3 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data)
 ```
+```{r}
+pairs(model_3)
+```
+
+```{r}
+model_3.1 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data, control = list(adapt_delta = 0.9, max_treedepth = 15 ))
+```
 
 ```{r}
 model_1

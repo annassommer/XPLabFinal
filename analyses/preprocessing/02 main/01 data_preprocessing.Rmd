@@ -1,7 +1,7 @@
 ---
 title: "01 data_preprocessing-pilot"
 author: "Fabienne Kock"
-date: "13 6 2019"
+date: "22 7 2019"
 output: html_document
 ---
 
@@ -18,12 +18,13 @@ library(tidyr)
 library(DescTools)
 library(Rmisc)
 library(dplyr)
+library(checkmate)
 ```
 
 
 ## 1. read in the data
 ```{r}
-data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\raw\\results_2019-21-07.csv")
+data <- read_csv("C:\\Users\\User\\Documents\\Semester4\\Psychology Lab\\XPLabFinal\\data\\02 main\\raw\\results_2019-22-07.csv")
 data
 ```
 ## filter for trait-test and picture-test and filter out the personal subject data
@@ -49,38 +50,44 @@ subj_data
 ## cleaning up ouliers in the trait-data and pic_data
 
 ```{r}
-
-
-id_num = pic_data[1,"experiment_id"]
-counter = 1
-
-
-while(id_num <= lengths(unique(pic_data["experiment_id"]))){
-
-
-id_data_pic <- filter(pic_data, experiment_id == id_num[1,1] )
-id_data_trait <-  filter(trait_data, experiment_id == id_num[1,1] )
-
+#creates a list with all subject_ids
+all_subjects_id<- unique(pic_data["submission_id"])
+stop <- lengths(all_subjects_id, use.names = FALSE)
+#creates a counter 
+counter_id = 1
+all_same_data <- vector("list", stop)
+muster_data <- vector("list", stop)
+rt_data <- vector("list", stop)
+#starts a while loop do go through all subjects
+while(counter_id <= stop){
+  
+id_num <- all_subjects_id[[counter_id,1]]
+#filters all the data of one subject
+id_data_pic <- filter(pic_data, submission_id == id_num )
+id_data_trait <-  filter(trait_data, submission_id == id_num )
+#filters the rating of one subject
 ratings_pic <- id_data_pic["response"]
 ratings_trait <- id_data_trait["response"]
-
+#filters the respones time of an subject and the standard dividion of the respones time of all subejects 
 rt_pic <- id_data_pic["RT"]
-rt_all_pic <- sd(pic_data[["RT"]])
 rt_trait <- id_data_trait["RT"]
+rt_all_pic <- sd(pic_data[["RT"]])
 rt_all_trait <- sd(trait_data[["RT"]])
-
+#checks if the answer is allways the same
 if(lengths(unique(ratings_pic))== 1 | lengths(unique(ratings_trait))== 1) {
-
-    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
-    all_same_data <- id_data }
+  
+    pic_data <- filter(pic_data, submission_id !=     id_num)
+    trait_data <- filter(trait_data, submission_id == id_num )
+    all_same_data[[counter_id]] <- id_num 
+    }
     
  #filters the muster 1,2,3,4,5,6,7
   i = 1
   muster = 1
   counter = 0
   del = 0
-  while (i <= lengths(ratings)){
-    if (muster == ratings[i,1]){
+  while (i <= lengths(ratings_pic)){
+    if (muster == ratings_pic[i,1]){
       counter = counter +1
     }
     muster = muster +1
@@ -94,30 +101,45 @@ if(lengths(unique(ratings_pic))== 1 | lengths(unique(ratings_trait))== 1) {
     i = i+1
   }
   if (del >= 4){
-    muster_data <- id_data
-    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
+    muster_data[[counter_id]] <- id_num
+    pic_data <- filter(pic_data, submission_id != id_num)
+     trait_data <- filter(trait_data, submission_id == id_num )
   }
   
-if((colMeans(rt_pic) < (rt_all_pic - (rt_all_pic*3 - rt_all_pic))| colMeans(rt_pic) > rt_all_pic*3)| (colMeans(rt_trait) < (rt_all_trait -(rt_all_trait*3 - rt_all_trait)) | colMeans(rt_trait) > rt_all_trait*3)){
-   rt_data <- id_data
-    pic_data <- filter(pic_data, experiment_id != id_num[1,1])
+#filters for the respones time 
+if((colMeans(rt_pic) < 
+    (rt_all_pic - (rt_all_pic*3 - rt_all_pic)))| 
+    colMeans(rt_pic) > rt_all_pic*3)
+  
+{
+  
+   rt_data[[counter_id]] <- id_num
+   pic_data <- filter(pic_data, submission_id != id_num)
+    trait_data <- filter(trait_data, submission_id == id_num )
+    
   }
   
-
-  id_num = id_num + 1
+  #gets the next subject
+  counter_id = counter_id + 1
+  counter_id = asInt(counter_id)
 }
-
 ```
 
 ### count the outliers
 
 
 ```{r}
-#num_out_same <- lengths(unique(all_same_data ["experiment_id"]))
-num_out_muster <- lengths(unique(muster_data ["experiment_id"]))
-num_out_rt <- lengths(unique(rt_data ["experiment_id"]))
+num_out_same <- length(unique(all_same_data)) -1
+num_out_muster <- length(unique(muster_data)) -1
+num_out_rt <- lengths(unique(rt_data)) -1
+```
 
 
+## create files with clean data for the analysis
+```{r}
+write_csv(subj_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\clean\\Subject_data_clean.csv")
+write_csv(trait_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\S4a_data_clean.csv")
+write_csv(pic_data, "C:\\Users\\sarah\\Documents\\XPLabFinal\\data\\03 paper\\S1_data_clean.csv")
 ```
 
 
