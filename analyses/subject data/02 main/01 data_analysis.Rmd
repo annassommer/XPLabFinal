@@ -1,12 +1,12 @@
 ---
 title: "01_data preprocessing"
 author: "Fabienne Kock"
-date: "8 6 2019"
+date: "23 7 2019"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 ```
 
 packages
@@ -38,10 +38,13 @@ summarized_results
 ```{r}
 male <-sum(data$gender == "männlich")
 female <-sum(data$gender == "weiblich")
+divers <-sum(data$gender == "divers")
 
 print("Männliche Teilnehmer: ")
 print(male)
 print("weibliche Teilnehmer: ")
 print(female)
+print("genderneutrale Teilnehmer: ")
+print(divers)
 ```
 
