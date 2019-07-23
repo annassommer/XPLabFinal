@@ -1,5 +1,5 @@
 ---
-title: "02 data_analysis"
+title: "01 data_analysis"
 author: "Fabienne Kock"
 date: "13 6 2019"
 output:
@@ -48,21 +48,26 @@ model_3.1 <- brm(formula = response ~ category + (category|pictureFormat), famil
 model_1
 model_2
 model_3
+model_3.1
 
 ```
 
-##comparing the models to find the best
+##3. comparing the models to find the best
 ```{r}
 loo1 <- loo(model_1)
 loo2 <- loo(model_2)
 loo3 <- loo(model_3)
+loo3.1 <- loo(model_3.1)
 ```
+
 ```{r}
 loo1
 loo2
 loo3
+loo3.1
 ```
+
 ```{r}
-loo_compare(loo1,loo2,loo3)
+loo_compare(loo1,loo2,loo3,loo3.1)
 ```
 
