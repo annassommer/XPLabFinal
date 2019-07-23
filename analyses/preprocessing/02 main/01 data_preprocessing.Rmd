@@ -53,14 +53,14 @@ subj_data
 ```{r}
 #creates a list with all subject_ids
 all_subjects_id<- unique(pic_data["submission_id"])
-stop <- lengths(all_subjects_id, use.names = FALSE)
-#creates a counter 
+
+#creates a counter and the list for the outliers
 counter_id = 1
 all_same_data <- vector("list", stop)
 muster_data <- vector("list", stop)
 rt_data <- vector("list", stop)
 #starts a while loop do go through all subjects
-while(counter_id <= stop){
+while(counter_id <=  lengths(all_subjects_id, use.names = FALSE)){
   
 id_num <- all_subjects_id[[counter_id,1]]
 #filters all the data of one subject
@@ -78,7 +78,7 @@ rt_all_trait <- sd(trait_data[["RT"]])
 if(lengths(unique(ratings_pic))== 1 | lengths(unique(ratings_trait))== 1) {
   
     pic_data <- filter(pic_data, submission_id !=     id_num)
-    trait_data <- filter(trait_data, submission_id == id_num )
+    trait_data <- filter(trait_data, submission_id != id_num )
     all_same_data[[counter_id]] <- id_num 
     }
     
@@ -104,25 +104,27 @@ if(lengths(unique(ratings_pic))== 1 | lengths(unique(ratings_trait))== 1) {
   if (del >= 4){
     muster_data[[counter_id]] <- id_num
     pic_data <- filter(pic_data, submission_id != id_num)
-     trait_data <- filter(trait_data, submission_id == id_num )
+     trait_data <- filter(trait_data, submission_id != id_num )
   }
   
 #filters for the respones time 
-if((colMeans(rt_pic) < 
+if(((colMeans(rt_pic) < 
     (rt_all_pic - (rt_all_pic*3 - rt_all_pic)))| 
-    colMeans(rt_pic) > rt_all_pic*3)
+    colMeans(rt_pic) > rt_all_pic*3)  |((colMeans(rt_trait) < 
+    (rt_all_trait - (rt_all_trait*3 - rt_all_trait
+                     )))| 
+    colMeans(rt_trait) > rt_all_trait*3))
   
 {
   
    rt_data[[counter_id]] <- id_num
    pic_data <- filter(pic_data, submission_id != id_num)
-    trait_data <- filter(trait_data, submission_id == id_num )
+    trait_data <- filter(trait_data, submission_id != id_num )
     
   }
   
   #gets the next subject
   counter_id = counter_id + 1
-  counter_id = asInt(counter_id)
 }
 ```
 
