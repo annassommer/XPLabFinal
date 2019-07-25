@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
@@ -30,7 +30,6 @@ data
 ```{r}
 model_1 <- brm(formula = response ~ category, family = "cumulative", data = data)
 ```
-
 ```{r}
 model_2 <- brm(formula = response ~ category + pictureFormat, family = "cumulative", data = data)
 ```
@@ -42,7 +41,7 @@ pairs(model_3)
 ```
 
 ```{r}
-model_3.1 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data, control = list(adapt_delta = 0.95, max_treedepth = 13 ))
+model_3.1 <- brm(formula = response ~ category + (category|pictureFormat), family = "cumulative", data = data, control = list(adapt_delta = 0.9, max_treedepth = 15 ))
 ```
 
 ```{r}
@@ -60,9 +59,6 @@ loo2 <- loo(model_2)
 loo3 <- loo(model_3)
 loo3.1 <- loo(model_3.1)
 ```
-```{r}
-k3 <- kfold(model_3, K = 10)
-```
 
 ```{r}
 loo1
@@ -72,6 +68,6 @@ loo3.1
 ```
 
 ```{r}
-loo_compare(loo1,loo2,loo3,loo3.1,k3)
+loo_compare(loo1,loo2,loo3,loo3.1)
 ```
 
